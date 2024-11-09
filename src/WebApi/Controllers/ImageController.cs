@@ -1,20 +1,17 @@
+using Domain.DataTransferObjects;
+using Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ImageController : ControllerBase
+public class ImageController(IImageService imageService) : ControllerBase
 {
-    [HttpPost]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpPost("[action]")]
+    public async Task<IActionResult> UploadAsync(IFormFile image)
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        Uri uri = await imageService.UploadAsync(new ImageDto(image.FileName, image.OpenReadStream()));
+        return Ok(uri);
     }
 }
