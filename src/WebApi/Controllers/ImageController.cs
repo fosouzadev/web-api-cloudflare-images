@@ -9,9 +9,9 @@ namespace WebApi.Controllers;
 public class ImageController(IImageService imageService) : ControllerBase
 {
     [HttpPost("[action]")]
-    public async Task<IActionResult> UploadAsync(IFormFile image)
-    {
-        Uri uri = await imageService.UploadAsync(new ImageDto(image.FileName, image.OpenReadStream()));
-        return Ok(uri);
-    }
+    [ProducesResponseType<UploadImageCdnResponse>(StatusCodes.Status200OK)]
+    [ProducesResponseType<ErrorResponse>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ErrorResponse>(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> UploadAsync(IFormFile image) =>
+        Ok(await imageService.UploadAsync(new ImageDto(image?.FileName, image?.OpenReadStream())));
 }

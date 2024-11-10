@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 namespace Domain.Services;
 
 public sealed class ImageService(
-    IOptions<string[]> extensionsAllowed,
+    IOptions<List<string>> extensionsAllowed,
     ICdnService cdnService) : IImageService
 {
     private void Validate(ImageDto image)
@@ -17,7 +17,7 @@ public sealed class ImageService(
             throw new ArgumentException(paramName: nameof(image), message: "Extension not allowed.");
     }
 
-    public async Task<Uri> UploadAsync(ImageDto image)
+    public async Task<UploadImageCdnResponse> UploadAsync(ImageDto image)
     {
         Validate(image);
 
