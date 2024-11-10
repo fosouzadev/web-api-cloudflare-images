@@ -1,6 +1,8 @@
-# web-api-upload-cload-flare
-Web Api Rest simples para fazer upload de fotos no Cloud Flare
+# Web Api
+Web Api Rest simples para fazer upload de fotos no Cloud Flare.
 
+## Comandos utilizados para criação dos projetos
+```csharp
 dotnet new sln -n WebApiUploadCloudFlare
 
 dotnet new webapi -n "WebApi" -o "src/WebApi" -f net8.0 -controllers
@@ -14,5 +16,9 @@ dotnet sln add "src/Infrastructure" -s src
 dotnet add "src/WebApi" reference "src/Domain"
 dotnet add "src/WebApi" reference "src/Infrastructure"
 dotnet add "src/Infrastructure" reference "src/Domain"
+```
 
-https://www.akamai.com/pt/solutions/content-delivery-network
+## Configurações do CloudFlare
+Informe no arquivo `appsettings.json` os seguintes valores obtidos no [dashboard](https://dash.cloudflare.com/login) do CloudFlare:
+* account_id
+* token
