@@ -16,12 +16,13 @@ public class ImageController(IImageService imageService) : ControllerBase
         Ok(await imageService.UploadAsync(new ImageDto(image?.FileName, image?.OpenReadStream())));
 
     [HttpDelete("{imageId}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType<ErrorResponse>(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<ErrorResponse>(StatusCodes.Status404NotFound)]
     [ProducesResponseType<ErrorResponse>(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteAsync([FromRoute] string imageId)
     {
         await imageService.DeleteAsync(imageId);
-        return Ok();
+        return NoContent();
     }
 }
