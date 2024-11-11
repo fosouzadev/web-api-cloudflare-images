@@ -18,7 +18,7 @@ public class CloudFlareService(
         HttpRequestMessage request = new(httpMethod, url);
 
         request.Headers.Add("Authorization", $"Bearer {cdnSettings.Value.Token}");
-        request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         return request;
     }
