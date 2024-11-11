@@ -8,19 +8,22 @@ public sealed class ImageService(
     IOptions<List<string>> extensionsAllowed,
     ICdnService cdnService) : IImageService
 {
-    private void Validate(ImageDto image)
+    public async Task<UploadImageCdnResponse> UploadAsync(ImageDto image)
     {
         if (image == null || string.IsNullOrWhiteSpace(image.Name) || image.Stream == null)
             throw new ArgumentNullException(paramName: nameof(image), "Invalid image.");
 
         if (extensionsAllowed.Value.Contains(Path.GetExtension(image.Name)) == false)
             throw new ArgumentException(paramName: nameof(image), message: "Extension not allowed.");
-    }
-
-    public async Task<UploadImageCdnResponse> UploadAsync(ImageDto image)
-    {
-        Validate(image);
 
         return await cdnService.UploadAsync(image);
+    }
+
+    public async Task DeleteAsync(string imageId)
+    {
+        if (string.IsNullOrWhiteSpace(imageId))
+            throw new ArgumentNullException(paramName: nameof(imageId), "Invalid image id.");
+
+        await cdnService.DeleteAsync(imageId);       
     }
 }

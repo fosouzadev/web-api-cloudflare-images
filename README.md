@@ -1,5 +1,5 @@
 # Web Api
-Web Api Rest simples para fazer upload de fotos no Cloud Flare.
+Web Api Rest simples para fazer integração com a API do Cloud Flare Images.
 
 ## Comandos utilizados para criação dos projetos
 ```csharp

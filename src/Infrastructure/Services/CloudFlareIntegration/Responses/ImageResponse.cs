@@ -1,14 +1,14 @@
 namespace Infrastructure.Services.CloudFlareIntegration;
 
-internal class UploadImageResponse
+internal class ImageResponse
 {
-    public ImageResponse Result { get; set; }
+    public ImageResponseData Result { get; set; }
     public bool Success { get; set; }
     public IEnumerable<MessageResponse> Errors { get; set; }
     public IEnumerable<MessageResponse> Messages { get; set; }
 }
 
-internal class ImageResponse
+internal class ImageResponseData
 {
     public string Id { get; set; }
     public string FileName { get; set; }
